@@ -22,6 +22,7 @@ def decrypt(
 
     best_score = 0
     best_guess = ""
+    best_mapping = dict()
 
     for i in range(iterations):
         guess_before = encrypt(mapping, secret)
@@ -36,6 +37,7 @@ def decrypt(
         if score_after > best_score:
             best_score = score_after
             best_guess = guess_after
+            best_mapping = mapping.copy()
 
         if random.random() > math.exp(score_after - score_before):
             mapping[a], mapping[b] = mapping[b], mapping[a]
@@ -43,4 +45,4 @@ def decrypt(
         if verbose and i % 500 == 0:
             print(f"{i} - {best_guess[:100]}")
 
-    return mapping
+    return best_mapping
